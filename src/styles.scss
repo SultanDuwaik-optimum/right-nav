@@ -1,1 +1,29 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@import '../m3-theme.scss';
+
+:root{
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  @include mat.all-component-themes($light-theme);
+  @include mat.system-level-typography($light-theme);
+}
+
+.theme-light {
+  @include mat.system-level-colors($light-theme);
+  @include mat.form-field-density(-5);
+  // @include mat.form-field-color(yellow);
+
+}
+
+.theme-dark {
+  @include mat.system-level-colors($dark-theme);
+}
+

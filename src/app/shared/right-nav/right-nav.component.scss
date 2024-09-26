@@ -1,0 +1,56 @@
+
+
+mat-drawer-container{
+    height: 100vh;
+
+    mat-drawer{
+        border-radius: 0;
+        border-left: 1px solid rgb(232, 232, 232);
+        box-shadow: -20px 0px 39.9px 0px rgba(0, 0, 0, 0.17);
+
+        padding: 20px;
+        width: 500px;
+        height: 100%;
+    }
+}
+
+ mat-drawer-content{
+    height: initial !important;
+}
+
+::ng-deep .mat-drawer-inner-container{
+    overflow: hidden !important;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+.form{
+    width: 100%;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-label{
+    font-family: "Outfit";
+    font-weight: 600;
+    color: var(--sys-primary);
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+
+    .mat-form-field{
+        flex: 1;
+    }
+
+    button{
+        flex: 1;
+    }
+}

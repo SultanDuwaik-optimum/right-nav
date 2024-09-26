@@ -1,0 +1,131 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" [opened]="isDrawerOpen()" position="end">
+    <ng-container *ngIf="getFormGroup() && getDrawerContent().isForm">
+      <form [formGroup]="getFormGroup()" (submit)="sendData()">
+        <ng-container *ngFor="let field of getDrawerContent().fields">
+          <ng-container [ngSwitch]="field.type">
+            <h2 *ngSwitchCase="'header'">
+              <div class="header">
+                <div>
+                  {{ field.text }}
+                </div>
+                <button mat-icon-button (click)="closeDrawer()">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+            </h2>
+
+            <ng-container *ngSwitchCase="'paragraph'">
+              <p *ngIf="!field.isHTML">{{ field.text }}</p>
+              <div *ngIf="field.isHTML" [innerHTML]="field.text"></div>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'row'">
+              <div class="row flex">
+                <ng-container *ngFor="let childField of field.children">
+                  <ng-container [ngSwitch]="childField.type">
+                    <ng-container *ngSwitchCase="'input'">
+                      <mat-form-field appearance="outline">
+                        <mat-label>{{ childField.label }}</mat-label>
+                        <input
+                          matInput
+                          [formControlName]="childField.formControlName"
+                          [type]="childField.inputType"
+                        />
+                      </mat-form-field>
+                    </ng-container>
+
+                    <ng-container *ngSwitchCase="'button'">
+                      <button
+                        mat-flat-button
+                        [disabled]="childField.isDisabled"
+                        type="{{ childField.buttonType }}"
+                        (click)="childField.event()"
+                      >
+                        {{ childField.label }}
+                      </button>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+
+            <p *ngSwitchCase="'text'">{{ field.text }}</p>
+
+            <ng-container *ngSwitchCase="'input'">
+              <mat-label>{{ field.label }}</mat-label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  [formControlName]="field.formControlName"
+                  [type]="field.inputType"
+                />
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'textarea'">
+              <mat-label>{{ field.label }}</mat-label>
+              <mat-form-field appearance="outline">
+                <textarea
+                  matInput
+                  [formControlName]="field.formControlName"
+                ></textarea>
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'select'">
+              <mat-form-field appearance="fill">
+                <mat-label>{{ field.label }}</mat-label>
+                <mat-select [formControlName]="field.formControlName">
+                  <mat-option
+                    *ngFor="let option of field.options"
+                    [value]="option.value"
+                  >
+                    {{ option.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'checkbox'">
+              <mat-checkbox [formControlName]="field.formControlName">
+                {{ field.label }}
+              </mat-checkbox>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'radio'">
+              <mat-label>{{ field.label }}</mat-label>
+              <mat-radio-group [formControlName]="field.formControlName">
+                <ng-container *ngFor="let option of field.options">
+                  <mat-radio-button [value]="option.value">{{
+                    option.label
+                  }}</mat-radio-button>
+                </ng-container>
+              </mat-radio-group>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'button'">
+              <button
+                mat-flat-button
+                [disabled]="field.isDisabled"
+                type="{{ field.buttonType }}"
+                (click)="field.event()"
+              >
+                {{ field.label }}
+              </button>
+            </ng-container>
+
+            <mat-divider
+              *ngSwitchCase="'divider'"
+              [class.inset]="field.inset"
+            ></mat-divider>
+          </ng-container>
+        </ng-container>
+      </form>
+    </ng-container>
+  </mat-drawer>
+
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+</mat-drawer-container>

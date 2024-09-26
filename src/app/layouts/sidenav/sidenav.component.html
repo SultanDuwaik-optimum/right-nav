@@ -1,0 +1,27 @@
+<mat-drawer-container [ngClass]="{'expanded': isOpen}">
+  <mat-drawer mode="side" opened="true" >
+    <ul class="sidenav-items">
+      
+      <li *ngFor="let item of navItems"
+          (click)="item.event()"
+          [ngClass]="{'selected': isItemSelected(item)}"
+          class="sidenav-item">
+
+        <div class="container">
+          <div class="icon">
+            <mat-icon [svgIcon]="item.name"></mat-icon>
+          </div>  
+          <p class="sidenav-label">
+            {{item.label}}
+          </p>
+        </div>
+
+      </li> 
+    </ul>
+  </mat-drawer>
+  
+  <mat-drawer-content>
+    <ng-content></ng-content>
+  </mat-drawer-content>
+  
+</mat-drawer-container>
